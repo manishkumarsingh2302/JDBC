@@ -1,0 +1,47 @@
+//  DAT 1 JDBC
+
+  	Steps of java Database connectivity
+
+Step1:  Register the Driver
+Class.forName(“com.mysql.cj.jdbc.Driver”);
+Note: forName() method throws checked Exception “ClassNotFoundException”
+
+Step2: Create the Connection
+Connection conn=DriverManager.getConnection(String url,String userName,String password);
+Example:
+String url=”jdbc:mysql://localhost:3306/jan13”;
+String un=”root”;
+String ps=”Ram@1234”;
+Connection conn=DriverManager.getConnection(url,un,ps);
+
+Note: getConnection() method throws checkedException “SQLException”
+
+Step3: Write SQL Query
+Insert/update/delete/select
+
+Step4: Create an Object of Statement
+Statement stmt=conn.createStatement();
+
+Step5: call executeQuery or executeUpdate() method via object of Statement
+
+If our frequent operation is data insertion/updation/deletion then we should call executeUpdate() method
+
+Syntax:
+int executeUpdate(String sql);
+Example :
+int r=stmt.executeUpdate(sql);
+If our operation data reading(select) from the database then we should call executeQuery() method
+Syntax:
+ResultSet executeQuery(String sql)
+ResultSet rs=stmt.executeQuery(sql);
+
+Extract data from ResultSet
+Methods of ResultSet
+Boolean next()
+int getInt(column name);
+float  getFloat(column name)
+String getString(column name);
+
+
+Step6: Close the Connection
+conn.close();
