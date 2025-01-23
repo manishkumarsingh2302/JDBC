@@ -1,0 +1,139 @@
+Q1. Write a java program to insert data into the student table?
+Database: jan13
+Table: student
+Sid
+Name
+Enroll
+Per
+P
+C
+M
+H
+E
+Total
+
+How to add jar(mysql connector) File in Netbeans IDE
+
+Right Click on the Project
+===&gt;properties======&gt;Libraries======&gt;Add Jar/Folder=====&gt;Browse jar and Add
+
+package com.ram.databaseoperation;
+import java.sql.*;
+public class InsertData {
+//main method shortcut psvm press Tab
+public static void main(String[] args) throws ClassNotFoundException, SQLException {
+//step1: Register the driver
+Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);
+//step2: Create the Connection
+String url=&quot;jdbc:mysql://localhost:3306/jan13&quot;;
+String un=&quot;root&quot;;
+String ps=&quot;Ram@1234&quot;;
+Connection conn=DriverManager.getConnection(url, un, ps);
+//step3: Write Sql insert query
+int sid=104;
+String name=&quot;Shivam&quot;;
+String enroll=&quot;123CS3&quot;;
+int p=81;
+int c=78;
+int m=69;
+int h=50;
+int e=49;
+int total=p+c+m+h+e;
+float per=total/5.0f;
+String sql=&quot;insert into student
+values(&#39;&quot;+sid+&quot;&#39;,&#39;&quot;+name+&quot;&#39;,&#39;&quot;+enroll+&quot;&#39;,&#39;&quot;+per+&quot;&#39;,&#39;&quot;+p+&quot;&#39;,&#39;&quot;+c+&quot;&#39;,&#39;&quot;+m+&quot;&#39;,&#39;&quot;+h+&quot;&#39;,&#39;&quot;+e+&quot;&#39;,&#39;&quot;+total+&quot;&#39;)&quot;;
+//step4: create an object of Statement
+Statement stmt=conn.createStatement();
+//step5: call executeUpdate() method
+int r=stmt.executeUpdate(sql);
+//step6: close the connection
+conn.close();
+if(r&gt;0){
+System.out.println(&quot;Data insertion success&quot;);
+}else{
+System.out.println(&quot;Data Insertion Fail&quot;);
+}
+}
+}
+
+/*
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
+package com.ram.databaseoperation;
+import java.sql.*;
+public class UpdateData {
+public static void main(String[] args) throws ClassNotFoundException, SQLException {
+//step1: Register the Driver
+Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);
+
+//step2: Create The connection
+String url=&quot;jdbc:mysql://localhost:3306/jan13&quot;;
+String un=&quot;root&quot;;
+String ps=&quot;Ram@1234&quot;;
+Connection conn=DriverManager.getConnection(url, un, ps);
+//step3: Write SQL Query (update)
+int sid=104;
+String name=&quot;hardik&quot;;
+String enroll=&quot;123CS4&quot;;
+int p=66;
+int c=77;
+int m=89;
+int h=56;
+int e=69;
+int total=p+c+m+h+e;
+float per=total/5.0f;
+String sql=&quot;update student set
+name=&#39;&quot;+name+&quot;&#39;,enroll=&#39;&quot;+enroll+&quot;&#39;,p=&#39;&quot;+p+&quot;&#39;,c=&#39;&quot;+c+&quot;&#39;,m=&#39;&quot;+m+&quot;&#39;,h=&#39;&quot;+h+&quot;&#39;,e=&#39;&quot;+e+&quot;&#39;,per=&#39;&quot;+per+&quot;&#39;,total=&#39;&quot;+total+&quot;&#39; where
+sid=&#39;&quot;+sid+&quot;&#39; &quot;;
+//step4: Create an object of Statement
+Statement stmt=conn.createStatement();
+//step5: call executeUpdate() method
+int r=stmt.executeUpdate(sql);
+//step6: Close the Connection
+conn.close();
+if(r&gt;0){
+System.out.println(&quot;Student Data Updated&quot;);
+}else{
+System.out.println(&quot;Student Data not updated&quot;);
+}
+}
+}
+
+/*
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
+package com.ram.databaseoperation;
+/**
+*
+* @author Admin
+*/import java.sql.*;
+public class DeleteData {
+public static void main(String[] args) throws ClassNotFoundException, SQLException {
+//step1: Register the Driver
+Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);
+//step2: Create the Connection
+String url=&quot;jdbc:mysql://localhost:3306/jan13&quot;;
+String un=&quot;root&quot;;
+String ps=&quot;Ram@1234&quot;;
+Connection conn=DriverManager.getConnection(url, un, ps);
+//step3: Write Sql query delete
+int sid=102;
+String sql=&quot;delete from student where sid=&#39;&quot;+sid+&quot;&#39;&quot;;
+//step4: Create Object of Statement
+Statement stmt=conn.createStatement();
+//step5: call executeUpdate()
+int r=stmt.executeUpdate(sql);
+//step6: close the connection
+conn.close();
+
+if(r&gt;0){
+System.out.println(&quot;Data Deleted success&quot;);
+}else{
+System.out.println(&quot;Data Not Deleted &quot;);
+}
+}
+}
