@@ -1,0 +1,241 @@
+import com.ram.bean.StudentBean;
+import java.util.ArrayList;
+/*
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
+/**
+*
+* @author Admin
+*/
+public class A2 {
+public static void main(String[] args) {
+ArrayList&lt;Integer&gt; list=new ArrayList&lt;Integer&gt;();
+list.add(10);
+list.add(100);
+list.add(20);
+list.add(200);
+System.out.println(list);
+System.out.println(&quot;Print Data Using for each &quot;);
+for(Integer x:list){
+System.out.println(&quot;&quot;+x);
+}
+ArrayList&lt;StudentBean&gt; list2=new ArrayList&lt;StudentBean&gt;();
+list2.add(new StudentBean(101, &quot;A&quot;, &quot;X1&quot;, 0, 0, 0, 0, 0, 0, 0));
+list2.add(new StudentBean(102, &quot;B&quot;, &quot;X1&quot;, 0, 0, 0, 0, 0, 0, 0));
+list2.add(new StudentBean(103, &quot;C&quot;, &quot;X1&quot;, 0, 0, 0, 0, 0, 0, 0));
+list2.add(new StudentBean(104, &quot;D&quot;, &quot;X1&quot;, 0, 0, 0, 0, 0, 0, 0));
+list2.add(new StudentBean(105, &quot;E&quot;, &quot;X1&quot;, 0, 0, 0, 0, 0, 0, 0));
+System.out.println(&quot;Print All Data from list 2&quot;);
+for(StudentBean sb:list2){
+System.out.println(&quot;&quot;+sb.getSid()+&quot;\t&quot;+sb.getName());
+}
+}
+}
+
+import java.sql.*;
+class StudentDAO{
+static Connection conn;
+public ArrayList&lt;StudentBean&gt; findAll(){
+//step1:
+//step2:
+conn=ConnectionPool.connectDB();
+ArrayList&lt;StudentBean&gt; list=new ArrayList&lt;StudentBean&gt;();
+//step3: Write SQL Query select
+String sql=&quot;select * from student&quot;;
+try {
+//step4: Create an Object of Statement
+Statement stmt=conn.createStatement();
+
+//step5: Call executeQuery method
+ResultSet rs=stmt.executeQuery(sql);
+//step6: Extract data from the ResultSet and add into ArrayList
+while(rs.next()){
+StudentBean x=new StudentBean();
+//step1: Fetch data from resultSet and Set Into the Bean
+x.setSid(rs.getInt(&quot;sid&quot;));
+x.setName(rs.getString(&quot;name&quot;));
+x.setEnroll(rs.getString(&quot;enroll&quot;));
+x.setP(rs.getInt(&quot;p&quot;));
+x.setC(rs.getInt(&quot;c&quot;));
+x.setM(rs.getInt(&quot;m&quot;));
+x.setH(rs.getInt(&quot;h&quot;));
+x.setE(rs.getInt(&quot;e&quot;));
+x.setTotal(rs.getInt(&quot;total&quot;));
+x.setPer(rs.getFloat(&quot;per&quot;));
+//step2: add bean object into list
+list.add(x);
+}
+//step7: Close the Connection
+conn.close();
+} catch (SQLException ex) {
+Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, null, ex);
+}
+return list;
+}
+public static void main(String[] args) {
+//4. call findAll Method
+StudentDAO sd=new StudentDAO();
+ArrayList&lt;StudentBean&gt; al=sd.findAll();
+for(StudentBean s:al){
+System.out.println(&quot;\t&quot;+s.getSid()+&quot;\t&quot;+s.getName()+&quot;\t&quot;+s.getEnroll()+&quot;\t&quot;+s.getP()+&quot;\t&quot;+s.getC()+&quot;\t
+&quot;+s.getM()+&quot;\t&quot;+s.getH()+&quot;\t&quot;+s.getE()+&quot;\t&quot;+s.getTotal()+&quot;\t&quot;+s.getPer());
+}
+/*
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
+package com.ram.dao;
+import com.ram.bean.StudentBean;
+import com.ram.utility.ConnectionPool;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class StudentDAO {
+static Connection conn;
+
+public int addStudent(StudentBean sb){
+//step1
+//step2
+conn=ConnectionPool.connectDB();
+//step3: Write SQL Query
+int total=sb.getP()+sb.getC()+sb.getM()+sb.getH()+sb.getE();
+float per=total/5.0f;
+String sql=&quot;insert into student
+values(&#39;&quot;+sb.getSid()+&quot;&#39;,&#39;&quot;+sb.getName()+&quot;&#39;,&#39;&quot;+sb.getEnroll()+&quot;&#39;,&#39;&quot;+sb.getP()+&quot;&#39;,&#39;&quot;+sb.getC()+&quot;&#39;,&#39;&quot;+sb.get
+M()+&quot;&#39;,&#39;&quot;+sb.getH()+&quot;&#39;,&#39;&quot;+sb.getE()+&quot;&#39;,&#39;&quot;+total+&quot;&#39;,&#39;&quot;+per+&quot;&#39;)&quot;;
+int r=0;
+try {
+//step4: Create Object of Statement
+Statement stmt=conn.createStatement();
+//step5: call executeUpdate()
+r=stmt.executeUpdate(sql);
+//step6: Close the Connection
+conn.close();
+} catch (SQLException ex) {
+Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, null, ex);
+}
+return r;
+}
+public int updateStudent(StudentBean sb){
+//step1
+//step2
+conn=ConnectionPool.connectDB();
+//step3: Write SQL Query
+int total=sb.getP()+sb.getC()+sb.getM()+sb.getH()+sb.getE();
+float per=total/5.0f;
+String sql=&quot;update student set
+name=&#39;&quot;+sb.getName()+&quot;&#39;,enroll=&#39;&quot;+sb.getEnroll()+&quot;&#39;,p=&#39;&quot;+sb.getP()+&quot;&#39;,c=&#39;&quot;+sb.getC()+&quot;&#39;,
+m=&#39;&quot;+sb.getM()+&quot;&#39;,h=&#39;&quot;+sb.getH()+&quot;&#39;,e=&#39;&quot;+sb.getE()+&quot;&#39;,total=&#39;&quot;+total+&quot;&#39;,per=&#39;&quot;+per+&quot;&#39; where
+sid=&#39;&quot;+sb.getSid()+&quot;&#39;&quot;;
+int r=0;
+try {
+//step4: Create Object of Statement
+Statement stmt=conn.createStatement();
+//step5: call executeUpdate()
+r=stmt.executeUpdate(sql);
+//step6: Close the Connection
+conn.close();
+} catch (SQLException ex) {
+Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, null, ex);
+}
+return r;
+}
+public int deleteStudent(int sid){
+//step1:
+//step2:
+conn=ConnectionPool.connectDB();
+int r=0;
+//step3: Write SQL Query
+String sql=&quot;delete from student where sid=&#39;&quot;+sid+&quot;&#39;&quot;;
+
+try {
+//step4: Create Object of Statement
+Statement stmt=conn.createStatement();
+//step5: call executeUpdate()
+r=stmt.executeUpdate(sql);
+//step6: Close the Connection
+conn.close();
+} catch (SQLException ex) {
+Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, null, ex);
+}
+return r;
+}
+public ArrayList&lt;StudentBean&gt; findAll(){
+//step1:
+//step2:
+conn=ConnectionPool.connectDB();
+ArrayList&lt;StudentBean&gt; list=new ArrayList&lt;StudentBean&gt;();
+//step3: Write SQL Query select
+String sql=&quot;select * from student&quot;;
+try {
+//step4: Create an Object of Statement
+Statement stmt=conn.createStatement();
+//step5: Call executeQuery method
+ResultSet rs=stmt.executeQuery(sql);
+//step6: Extract data from the ResultSet and add into ArrayList
+while(rs.next()){
+StudentBean x=new StudentBean();
+//step1: Fetch data from resultSet and Set Into the Bean
+x.setSid(rs.getInt(&quot;sid&quot;));
+x.setName(rs.getString(&quot;name&quot;));
+x.setEnroll(rs.getString(&quot;enroll&quot;));
+x.setP(rs.getInt(&quot;p&quot;));
+x.setC(rs.getInt(&quot;c&quot;));
+x.setM(rs.getInt(&quot;m&quot;));
+x.setH(rs.getInt(&quot;h&quot;));
+x.setE(rs.getInt(&quot;e&quot;));
+x.setTotal(rs.getInt(&quot;total&quot;));
+x.setPer(rs.getFloat(&quot;per&quot;));
+//step2: add bean object into list
+list.add(x);
+}
+//step7: Close the Connection
+conn.close();
+} catch (SQLException ex) {
+Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, null, ex);
+}
+return list;
+}
+public static void main(String[] args) {
+//4. call findAll Method
+StudentDAO sd=new StudentDAO();
+ArrayList&lt;StudentBean&gt; al=sd.findAll();
+for(StudentBean s:al){
+
+System.out.println(&quot;\t&quot;+s.getSid()+&quot;\t&quot;+s.getName()+&quot;\t&quot;+s.getEnroll()+&quot;\t&quot;+s.getP()+&quot;\t&quot;+s.getC()+&quot;\t
+&quot;+s.getM()+&quot;\t&quot;+s.getH()+&quot;\t&quot;+s.getE()+&quot;\t&quot;+s.getTotal()+&quot;\t&quot;+s.getPer());
+}
+// StudentBean sb=new StudentBean();
+// sb.setC(67);
+// sb.setE(78);
+// sb.setEnroll(&quot;011Cs1&quot;);
+// sb.setH(67);
+// sb.setM(66);
+// sb.setP(55);
+// sb.setName(&quot;XXXXX&quot;);
+// sb.setSid(105);
+// StudentDAO sd=new StudentDAO();
+// int result=sd.addStudent(sb);
+// if(result&gt;0){
+// System.out.println(&quot;Student Added Success&quot;);
+// }else{
+// System.out.println(&quot;Student Not Added&quot;);
+// }
+////3. Call deletestudent()
+//StudentDAO sd=new StudentDAO();
+//int x=sd.deleteStudent(101);
+//if(x&gt;0){
+// System.out.println(&quot;Data Deletion success&quot;);
+//}else{
+// System.out.println(&quot;Data Deletion Fail&quot;);
+//}
+}
+}
