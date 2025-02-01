@@ -1,0 +1,135 @@
+import java.util.ArrayList;
+/*
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
+/**
+*
+* @author Admin
+*/
+public class ArrayListExample {
+public static void main(String[] args) {
+//Array : fixed in size after declaring array we cannot change it
+//It can hold only same type values
+//ArrayList:
+//Flexible and growable in nature
+//It can hold same type or different type of data
+//ArrayList Class comes from java.util
+//Constructor or ArrayList Class
+//1. ArrayList();
+//2. ArrayList(Collection);
+//Methods of ArrayList Class
+//1. add(Object)
+ArrayList al=new ArrayList();
+al.add(&quot;Hello&quot;);
+al.add(20);
+al.add(true);
+al.add(3.14);
+
+al.add(&#39;X&#39;);
+System.out.println(al);
+System.out.println(&quot;Print Data Using For each Loop : &quot;);
+for(Object a:al){
+System.out.print(&quot;\t&quot;+a);
+}
+
+}
+}
+
+/*
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
+package com.ram.dao;
+import com.ram.bean.StudentBean;
+import com.ram.utility.ConnectionPool;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class StudentDAO {
+static Connection conn;
+public int addStudent(StudentBean sb){
+//step1
+//step2
+conn=ConnectionPool.connectDB();
+//step3: Write SQL Query
+int total=sb.getP()+sb.getC()+sb.getM()+sb.getH()+sb.getE();
+float per=total/5.0f;
+String sql=&quot;insert into student
+values(&#39;&quot;+sb.getSid()+&quot;&#39;,&#39;&quot;+sb.getName()+&quot;&#39;,&#39;&quot;+sb.getEnroll()+&quot;&#39;,&#39;&quot;+sb.getP()+&quot;&#39;,&#39;&quot;+sb.getC()+&quot;&#39;,&#39;&quot;+sb.get
+M()+&quot;&#39;,&#39;&quot;+sb.getH()+&quot;&#39;,&#39;&quot;+sb.getE()+&quot;&#39;,&#39;&quot;+total+&quot;&#39;,&#39;&quot;+per+&quot;&#39;)&quot;;
+int r=0;
+try {
+//step4: Create Object of Statement
+Statement stmt=conn.createStatement();
+//step5: call executeUpdate()
+r=stmt.executeUpdate(sql);
+//step6: Close the Connection
+conn.close();
+} catch (SQLException ex) {
+Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, null, ex);
+}
+return r;
+}
+public int updateStudent(StudentBean sb){
+
+//step1
+//step2
+conn=ConnectionPool.connectDB();
+//step3: Write SQL Query
+int total=sb.getP()+sb.getC()+sb.getM()+sb.getH()+sb.getE();
+float per=total/5.0f;
+String sql=&quot;update student set
+name=&#39;&quot;+sb.getName()+&quot;&#39;,enroll=&#39;&quot;+sb.getEnroll()+&quot;&#39;,p=&#39;&quot;+sb.getP()+&quot;&#39;,c=&#39;&quot;+sb.getC()+&quot;&#39;,
+m=&#39;&quot;+sb.getM()+&quot;&#39;,h=&#39;&quot;+sb.getH()+&quot;&#39;,e=&#39;&quot;+sb.getE()+&quot;&#39;,total=&#39;&quot;+total+&quot;&#39;,per=&#39;&quot;+per+&quot;&#39; where
+sid=&#39;&quot;+sb.getSid()+&quot;&#39;&quot;;
+int r=0;
+try {
+//step4: Create Object of Statement
+Statement stmt=conn.createStatement();
+//step5: call executeUpdate()
+r=stmt.executeUpdate(sql);
+//step6: Close the Connection
+conn.close();
+} catch (SQLException ex) {
+Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, null, ex);
+}
+return r;
+}
+public int deleteStudent(int sid){
+//step1:
+//step2:
+conn=ConnectionPool.connectDB();
+int r=0;
+//step3: Write SQL Query
+String sql=&quot;delete from student where sid=&#39;&quot;+sid+&quot;&#39;&quot;;
+try {
+//step4: Create Object of Statement
+Statement stmt=conn.createStatement();
+//step5: call executeUpdate()
+r=stmt.executeUpdate(sql);
+//step6: Close the Connection
+conn.close();
+} catch (SQLException ex) {
+Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, null, ex);
+}
+return r;
+}
+public static void main(String[] args) {
+// StudentBean sb=new StudentBean();
+// sb.setC(67);
+// sb.setE(78);
+// sb.setEnroll("011Cs1");
+// sb.setH(67);
+// sb.setM(66);
+// sb.setP(55);
+// sb.setName("XXXXX");
+// sb.setSid(105);
+// StudentDAO sd=new StudentDAO();
+// int result=sd.addStudent(sb);
+// if(result&gt;0){
