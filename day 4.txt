@@ -1,0 +1,209 @@
+// JDBC_NOTES_27_JAN //
+
+
+
+// StudentBean.java //package com.ram.bean;
+
+
+
+/**
+ *
+ * @author yadav
+ */
+public class StudentBean {
+    private int sid;
+    private String name;
+    private String enroll;
+    private int p;
+    private int m;
+    private int c;
+    private int h;
+    private int e;
+    private int total;
+    private float per;
+
+    public StudentBean() {
+    }
+
+    public StudentBean(int sid, String name, String enroll, int p, int m, int c, int h, int e, int total, float per) {
+        this.sid = sid;
+        this.name = name;
+        this.enroll = enroll;
+        this.p = p;
+        this.m = m;
+        this.c = c;
+        this.h = h;
+        this.e = e;
+        this.total = total;
+        this.per = per;
+    }
+
+    public int getSid() {
+        return sid;
+    }
+
+    public void setSid(int sid) {
+        this.sid = sid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEnroll() {
+        return enroll;
+    }
+
+    public void setEnroll(String enroll) {
+        this.enroll = enroll;
+    }
+
+    public int getP() {
+        return p;
+    }
+
+    public void setP(int p) {
+        this.p = p;
+    }
+
+    public int getM() {
+        return m;
+    }
+
+    public void setM(int m) {
+        this.m = m;
+    }
+
+    public int getC() {
+        return c;
+    }
+
+    public void setC(int c) {
+        this.c = c;
+    }
+
+    public int getH() {
+        return h;
+    }
+
+    public void setH(int h) {
+        this.h = h;
+    }
+
+    public int getE() {
+        return e;
+    }
+
+    public void setE(int e) {
+        this.e = e;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public float getPer() {
+        return per;
+    }
+
+    public void setPer(float per) {
+        this.per = per;
+    }
+   
+}
+
+//  ConnectionPool.java //
+
+package com.ram.utility;
+
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class ConnectionPool {
+  static Connection conn;
+
+    public static Connection connectDB(){
+      try {
+          //step1: REGITER THE DRIVER
+          Class.forName("com.mysql.cj.jdbc.Driver");
+          //STEP2: CREATE THE CONNECTION
+          String url="jdbc:mysql://localhost:3306/jain_20";
+          String userName="root";
+          String password="Mohit@#1234";
+          conn=DriverManager.getConnection(url, userName, password);
+          System.out.println("Database Connection Success");
+      } catch (ClassNotFoundException ex) {
+          Logger.getLogger(ConnectionPool.class.getName()).log(Level.SEVERE, null, ex);
+      } catch (SQLException ex) {
+          Logger.getLogger(ConnectionPool.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      return conn;  
+    }
+    public static void main(String[] args) {
+        connectDB();
+    }
+}
+
+
+//  StudentDAO.java  // 
+
+package com.ram.dao;
+
+import com.ram.bean.StudentBean;
+import com.ram.utility.ConnectionPool;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
+public class StudentDAO {
+ static Connection conn;
+public int addStudent(StudentBean sb){
+    int r=0;
+    //step1:
+    //step2:
+    conn=ConnectionPool.connectDB();
+    //step3: Wrtite SQL Query
+    int total=sb.getP()+sb.getC()+sb.getE()+sb.getH()+sb.getM();
+    float per=total/5.0f;
+    String sql="insert into student values('"+sb.getSid()+"','"+sb.getName()+"','"+sb.getEnroll()+"','"+sb.getP()+"','"+sb.getC()+"','"+sb.getM()+"','"+sb.getH()+"','"+sb.getE()+"','"+total+"','"+per+"')";
+     try {
+         //step4: Create Object of Statement
+         Statement stmt=conn.createStatement();
+         //step5: call executeUpdate()
+         r=stmt.executeUpdate(sql);
+         //step6: close the connection
+         conn.close();
+     } catch (SQLException ex) {
+         Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, null, ex);
+     }
+   return r;
+}
+    public static void main(String[] args) {
+        StudentBean sb=new StudentBean();
+        sb.setC(67);
+        sb.setE(78);
+        sb.setEnroll("123CS123");
+        sb.setH(67);
+        sb.setM(55);
+        sb.setName("Kartik");
+        sb.setP(66);
+        sb.setSid(1001);
+        StudentDAO sd=new StudentDAO();
+        int result=sd.addStudent(sb);
+        if(result>0){
+            System.out.println("Student Added Success");
+        }else{
+            System.out.println("Student Not Added");
+        }
+    }
+}
