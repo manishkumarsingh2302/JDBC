@@ -1,0 +1,172 @@
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 8.0.40 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> crate databases emp3
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'crate databases emp3
+)' at line 1
+mysql> crate databases
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'crate databases
+)' at line 1
+mysql> create table emp(
+    -> empno int primary key,
+    -> ename varchar(45),
+    -> job varchar(45),
+    -> mgr int,
+    -> hiredate date,
+    -> sal float,
+    -> comm float,
+    -> deptno int
+    -> );
+ERROR 1046 (3D000): No database selected
+mysql> create database emp3;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> create table emp(
+    -> empno int primary key,
+    -> ename varchar(45),
+    -> job varchar(45),
+    -> mgr int,
+    -> hiredate date,
+    -> sal float,
+    -> comm float,
+    -> deptno int
+    -> );
+ERROR 1046 (3D000): No database selected
+mysql> use emp3;
+Database changed
+mysql> create table emp(
+    -> empno int primary key,
+    -> ename varchar(45),
+    -> job varchar(45),
+    -> mgr int,
+    -> hiredate date,
+    -> sal float,
+    -> comm float,
+    -> deptno int
+    -> );
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> insert into emp values(800,null,null,null,NULL,NULL,NULL,NULL);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into emp values(7369,"SMITH","CLERK",7902,'1980-08-02',NULL,800,20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(7499,"ALLEN","SALESMAN",7698,'1981-02-20',21500,150,30);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(7521,"WARD","SALESMAN",7698,'1981-02-22',10000,500,30);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(7566,"JONES","MANAGER",7839,'1981-04-02',11512,NUL,20);
+ERROR 1054 (42S22): Unknown column 'NUL' in 'field list'
+mysql> insert into emp values(7654,"MARTIN","SALESMAN",7698,'1981-09-28',12789,1400,30);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(7698,"BLACK","MANAGER",7839,'1982-05-01',21563,NULL,30);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(7782,"CLARK","MANAGER",7839,'1981-06-09',10365,NULL,10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(7788,"SCOTT","ANALYST",7566,'1982-12-09',17845,NULL,20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(7839,"KING","PRESIDENT",NULL,'1981-11-17',10234,NULL,10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(7844,"TURNER","SALESMAN",7698,'1981-09-08',11542,0,30);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(7876,"ADAMS","CLERK",7788,'1983-01-12',15692,NULL,20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(7900,"JAMES","CLERK",7698,'1981-12-03',21212,NULL,30);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(7902,"FORD","ANALYST",7566,'1981-12-03',13652,NULL,20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(7934,"MILLER","CLERK",7782,'1982-01-23',14892,NULL,10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> create table users(
+    -> uid int primary key,
+    -> name varchar(45),
+    -> username varchar(45),
+    -> password varchar(45),
+    -> email varchar(45),
+    -> mobile varchar(45)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> show table users;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'users' at line 1
+mysql> select*from users;
+Empty set (0.00 sec)
+
+mysql> desc users;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| uid      | int         | NO   | PRI | NULL    |       |
+| name     | varchar(45) | YES  |     | NULL    |       |
+| username | varchar(45) | YES  |     | NULL    |       |
+| password | varchar(45) | YES  |     | NULL    |       |
+| email    | varchar(45) | YES  |     | NULL    |       |
+| mobile   | varchar(45) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.07 sec)
+
+mysql> desc emp;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| empno    | int         | NO   | PRI | NULL    |       |
+| ename    | varchar(45) | YES  |     | NULL    |       |
+| job      | varchar(45) | YES  |     | NULL    |       |
+| mgr      | int         | YES  |     | NULL    |       |
+| hiredate | date        | YES  |     | NULL    |       |
+| sal      | float       | YES  |     | NULL    |       |
+| comm     | float       | YES  |     | NULL    |       |
+| deptno   | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+------+------------+-------+------+--------+
+| empno | ename  | job       | mgr  | hiredate   | sal   | comm | deptno |
++-------+--------+-----------+------+------------+-------+------+--------+
+|   800 | NULL   | NULL      | NULL | NULL       |  NULL | NULL |   NULL |
+|  7369 | SMITH  | CLERK     | 7902 | 1980-08-02 |  NULL |  800 |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 21500 |  150 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 10000 |  500 |     30 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 12789 | 1400 |     30 |
+|  7698 | BLACK  | MANAGER   | 7839 | 1982-05-01 | 21563 | NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 10365 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 17845 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 10234 | NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 11542 |    0 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 15692 | NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 | 21212 | NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 13652 | NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 14892 | NULL |     10 |
++-------+--------+-----------+------+------------+-------+------+--------+
+14 rows in set (0.00 sec)
+
+mysql>
+
+
+
